@@ -34,6 +34,7 @@
 #include <opencv2/imgproc/imgproc_c.h>
 #include <opencv2/core/types_c.h>
 #include <opencv2/core/version.hpp>
+
 #endif
 
 //using namespace cv;
@@ -76,6 +77,10 @@ using std::endl;
 #ifndef CV_AA
 #define CV_AA cv::LINE_AA
 #endif
+
+
+
+
 
 extern "C" {
 
@@ -787,6 +792,11 @@ extern "C" image get_image_from_stream_resize(cap_cv *cap, int w, int h, int c, 
     //show_image_mat(*in_img, "in_img");
     return im;
 }
+// -----------------------------------------
+
+
+
+
 // ----------------------------------------
 
 extern "C" image get_image_from_stream_letterbox(cap_cv *cap, int w, int h, int c, mat_cv** in_img, int dont_close)

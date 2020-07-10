@@ -1637,7 +1637,7 @@ void test_detector(char *datacfg, char *cfgfile, char *weightfile, char *filenam
                 fwrite(tmp, sizeof(char), strlen(tmp), json_file);
             }
             ++json_image_id;
-            json_buf = detection_to_json(dets, nboxes, l.classes, names, json_image_id, input);
+            json_buf = detection_to_json(dets, nboxes, l.classes, names, json_image_id, input, NULL);
 
             fwrite(json_buf, sizeof(char), strlen(json_buf), json_file);
             free(json_buf);

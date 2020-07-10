@@ -268,10 +268,7 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
             printf("Objects:\n\n");
 
             ++frame_id;
-            if (demo_json_port > 0) {
-                int timeout = 400000;
-                send_json(local_dets, local_nboxes, l.classes, demo_names, frame_id, demo_json_port, timeout);
-            }
+
 
             //char *http_post_server = "webhook.site/898bbd9b-0ddd-49cf-b81d-1f56be98d870";
             if (http_post_host && !send_http_post_once) {
@@ -285,6 +282,10 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
             }
 
             if (!benchmark && !dontdraw_bbox) draw_detections_cv_v3(show_img, local_dets, local_nboxes, demo_thresh, demo_names, demo_alphabet, demo_classes, demo_ext_output);
+                        if (demo_json_port > 0 && show_img) {
+                int timeout = 400000;
+                send_json(local_dets, local_nboxes, l.classes, demo_names, frame_id, demo_json_port, timeout,show_img);
+            }
             free_detections(local_dets, local_nboxes);
 
             printf("\nFPS:%.1f \t AVG_FPS:%.1f\n", fps, avg_fps);
@@ -318,6 +319,8 @@ void demo(char *cfgfile, char *weightfile, float thresh, float hier_thresh, int 
                 int jpeg_quality = 40;    // 1 - 100
                 send_mjpeg(show_img, port, timeout, jpeg_quality);
             }
+
+
 
             // save video file
             if (output_video_writer && show_img) {

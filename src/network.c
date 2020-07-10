@@ -916,17 +916,17 @@ void free_batch_detections(det_num_pair *det_num_pairs, int n)
 // ]
 //},
 
-char *detection_to_json(detection *dets, int nboxes, int classes, char **names, long long int frame_id, char *filename)
+char *detection_to_json(detection *dets, int nboxes, int classes, char **names, long long int frame_id, char *filename, char *base64_img)
 {
     const float thresh = 0.005; // function get_network_boxes() has already filtred dets by actual threshold
+    char *send_buf = (char *)calloc(32768, sizeof(char));
 
-    char *send_buf = (char *)calloc(1024, sizeof(char));
     if (!send_buf) return 0;
     if (filename) {
-        sprintf(send_buf, "{\n \"frame_id\":%lld, \n \"filename\":\"%s\", \n \"objects\": [ \n", frame_id, filename);
+        sprintf(send_buf, "{\n \"frame_id\":%lld, \n \"img\":\"%s\", \n \"filename\":\"%s\", \n \"objects\": [ \n", frame_id, base64_img, filename);
     }
     else {
-        sprintf(send_buf, "{\n \"frame_id\":%lld, \n \"objects\": [ \n", frame_id);
+        sprintf(send_buf, "{\n \"frame_id\":%lld,  \n \"img\":\"%s\", \n \"objects\": [ \n", frame_id, base64_img);
     }
 
     int i, j;
